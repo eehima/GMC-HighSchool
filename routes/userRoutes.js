@@ -41,7 +41,7 @@ router.put('/update-user/:UserId', async (req, res) => {
         res.status(500).json({ message: error.message });
      }
     
-})
+});
 
 
 //  Endpoint to delete Each student information
