@@ -22,7 +22,12 @@
     password: {
         type: String,
         required: true
-    }
+    },
+  classGrade: {
+    type: String,
+    required: true
+  }
+
 });
 
 
