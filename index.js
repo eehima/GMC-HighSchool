@@ -23,4 +23,4 @@ const port = 5050;
             console.log(`Server started on port http://localhost:${port}`);
         });
         
-    })
+    });

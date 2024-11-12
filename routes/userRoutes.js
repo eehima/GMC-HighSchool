@@ -7,9 +7,9 @@ const Post = require("../models/User");
 router.post("/create-post", async (req, res) => {
   // extract data from request body
   try {
-    const { firstName, lastName, dateOfBirth, email, password, classGrade} = req.body;
+    const { firstName, lastName, dateOfBirth, email, password, classGrade , isUser} = req.body;
     // validation
-    if (!firstName || !lastName || !dateOfBirth || !email || !password || !classGrade || !isUser) {
+    if (!firstName || !lastName || !dateOfBirth || !email || !classGrade ) {
       return res.status(400).json({ message: "All fields are required" });
     }
     const newPost = new Post({
@@ -58,16 +58,15 @@ router.put("/update-post/:id", async (req, res) => {
     post.dateOfBirth = dateOfBirth;
     post.email = email;
     post.password = password;
-   post.classGrade = classGrade
+   post.classGrade = classGrade,
    post.isUser = false
-
-    // save updated post to database
-    const updatedPost = await post.save();
+     // userRoutes goes here
+      const updatedPost = await post.save();
     // send response
     res.status(200).json({ success: true, data: updatedPost });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
-
+ 
 module.exports = router;
