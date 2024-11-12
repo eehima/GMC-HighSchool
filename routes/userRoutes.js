@@ -1,72 +1,82 @@
-// userRoutes goes here
 const express = require("express");
 const router = express.Router();
-const Post = require("../models/User");
+const User = require("../models/User");
 
-// create new post endpoint
-router.post("/create-post", async (req, res) => {
-  // extract data from request body
+// create new user endpoint
+router.post("/create-user", async (req, res) => {
   try {
-    const { firstName, lastName, dateOfBirth, email, password, classGrade , isUser} = req.body;
-    // validation
-    if (!firstName || !lastName || !dateOfBirth || !email || !classGrade ) {
-      return res.status(400).json({ message: "All fields are required" });
-    }
-    const newPost = new Post({
+    // Extract data from request body
+    const {
       firstName,
       lastName,
       dateOfBirth,
       email,
-      password,
-      classGrade,
-      isUser
-    });
-    //  save post to database
-    const savedPost = await newPost.save();
-    // send response
-    res.status(201).json({ success: true, data: savedPost });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
+      fullAddress,
+      gender,
+      phoneNo,
+      class: userClass,
+    } = req.body;
 
-// get all post endpoint
-router.get("/fetch-posts", async (req, res) => {
-  try {
-    const posts = await Post.find();
-
-    res.status(200).json({ success: true, data: posts });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
-// update single post endpoint
-router.put("/update-post/:id", async (req, res) => {
-  // extract postId from request params
-  const { id } = req.params;
-  // extract data from request body
-  const { firstName, lastName, dateOfBirth, email, password, classGrade, isUser} = req.body;
-
-  try {
-    const post = await Post.findById(id);
-    if (!post) {
-      return res.status(404).json({ message: "Post not found" });
+    // Validation to ensure required fields are provided
+    if (
+      !firstName ||
+      !lastName ||
+      !dateOfBirth ||
+      !email ||
+      !fullAddress ||
+      !gender ||
+      !phoneNo ||
+      !userClass
+    ) {
+      return res.status(400).json({ message: "All fields are required" });
     }
-    // update post
-    post.firstName = firstName;
-    post.lastName = lastName;
-    post.dateOfBirth = dateOfBirth;
-    post.email = email;
-    post.password = password;
-   post.classGrade = classGrade,
-   post.isUser = false
-     // userRoutes goes here
-      const updatedPost = await post.save();
-    // send response
-    res.status(200).json({ success: true, data: updatedPost });
+
+    // Create a new user instance
+    const newUser = new User({
+      firstName,
+      lastName,
+      dateOfBirth,
+      email,
+      fullAddress,
+      gender,
+      phoneNo,
+      class: userClass, 
+      
+    });
+
+    // Save user to the database
+    const savedUser = await newUser.save();
+
+    // Send success response
+    res.status(200).json({ success: true, data: savedUser });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
- 
+
+// Get all users endpoint
+router.get("/fetch-user", async (req, res) => {
+  try {
+    const users = await User.find(); 
+    // Fetch all users
+
+    res.status(200).json({ success: true, data: users });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+// Fetch a single student by ID endpoint
+router.get("/fetch-user/:id", async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.status(200).json({ success: true, data: user });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+
+});
+
 module.exports = router;
