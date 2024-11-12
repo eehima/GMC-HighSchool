@@ -5,7 +5,7 @@
   const Post = require('../models/User');
 
 // Approve application endpoint(change is user from false to true)
-router.put('/approve-user/:id/approve', async (req, res) => {
+router.patch('/approve-user/:id/approve', async (req, res) => {
     try {
         const user = await Post.findByIdAndUpdate(req.params.id, { isUser: true }, { new: true });
         if (!user) {
