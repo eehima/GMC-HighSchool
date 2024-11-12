@@ -25,13 +25,11 @@ const userSchema = new mongoose.Schema({
   },
   userName: {
     type: String,
-    required: true,
     trim: true,
     default: "student",
   },
   password: {
     type: String,
-    required: true,
     trim: true,
     default: "pass",
   },
