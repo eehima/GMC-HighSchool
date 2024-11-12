@@ -6,12 +6,12 @@ const userSchema = new mongoose.Schema({
   firstName: {
     type: String,
     required: true,
-    trims: true,
+    trim: true,
   },
   lastName: {
     type: String,
     required: true,
-    trims: true,
+    trim: true,
   },
   dateOfBirth: {
     type: Date,
@@ -20,18 +20,20 @@ const userSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
-    trims: true,
+    trim: true,
     unique: true,
   },
   userName: {
     type: String,
     required: true,
-    trims: true,
+    trim: true,
+    default: "student",
   },
   password: {
     type: String,
     required: true,
-    trims: true,
+    trim: true,
+    default: "pass",
   },
   class: {
     type: String,
