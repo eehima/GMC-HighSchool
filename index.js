@@ -15,7 +15,7 @@ const port = 5050;
         app.use(express.json());
 
         // define routes
-        app.use("/api", userRoutes);
+        app.use("/api/user", userRoutes);
 
 
         // start server
